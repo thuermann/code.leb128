@@ -1,0 +1,15 @@
+LEB128 is a space efficient encoding of integers of variable lengths.
+Small integers are encoded using very few bytes (at least 1), while there
+is no limit at how large the integer values can be.  There are variants
+for signed and unsigned integers.
+
+Integers are encoded as a series of 7-bit values in little-endian
+order with the most significant bit in each byte indicating whether
+there are more bytes following.
+
+This encoding is used e.g. in the DWARF debugging data format, by some
+C++ compilers's exception handling tables, and by the Google protobuf
+library.
+
+This simple program can encode and decode both, signed and unsigned integers
+given as command-line arguments.
