@@ -1,5 +1,5 @@
 /*
- * $Id: leb128.c,v 1.1 2018/09/23 08:50:37 urs Exp $
+ * $Id: leb128.c,v 1.2 2018/09/24 20:59:37 urs Exp $
  */
 
 #include <stdlib.h>
@@ -148,12 +148,10 @@ static long signed_leb128_to_long(const unsigned char *s)
 
 static void print_leb128(const unsigned char *leb128)
 {
-    for (int i = 0; ; i++) {
-	printf(" %.2x", leb128[i]);
-	if ((leb128[i] & 0x80) == 0)
-	    break;
+    for (int i = 0, more = 1; more; i++) {
+	more = leb128[i] & 0x80;
+	printf(more ? "%.2x " : "%.2x\n", leb128[i]);
     }
-    putchar('\n');
 }
 
 static void read_leb128(int argc, char **argv, unsigned char *leb128)
