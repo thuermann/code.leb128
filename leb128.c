@@ -1,9 +1,10 @@
 /*
- * $Id: leb128.c,v 1.2 2018/09/24 20:59:37 urs Exp $
+ * $Id: leb128.c,v 1.3 2018/09/24 21:00:43 urs Exp $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 #include <unistd.h>
 
 static void usage(const char *name)
@@ -140,7 +141,7 @@ static long signed_leb128_to_long(const unsigned char *s)
 	more = c & 0x80;
     } while (more);
 
-    if (c & 0x40)
+    if (c & 0x40 && shift < sizeof(unsigned long) * CHAR_BIT)
 	val |= ~0UL << shift;
 
     return val;
