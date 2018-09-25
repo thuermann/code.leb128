@@ -1,0 +1,13 @@
+//
+// $Id: int.proto,v 1.1 2018/09/25 23:57:58 urs Exp $
+//
+
+syntax = "proto3";
+
+package integers;
+
+message ints {
+	uint32 ui = 1;
+	int32  i  = 2;
+	sint32 si = 3;
+}
