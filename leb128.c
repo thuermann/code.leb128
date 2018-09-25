@@ -1,5 +1,5 @@
 /*
- * $Id: leb128.c,v 1.4 2018/09/24 21:01:48 urs Exp $
+ * $Id: leb128.c,v 1.5 2018/09/25 23:54:08 urs Exp $
  */
 
 #include <stdlib.h>
@@ -14,6 +14,8 @@ static void usage(const char *name)
 
 typedef long long signed_int;
 typedef unsigned long long unsigned_int;
+
+static const int uint_bits = sizeof(unsigned_int) * CHAR_BIT;
 
 static void unsigned_int_to_leb128(unsigned_int val, unsigned char *s);
 static void signed_int_to_leb128(signed_int val, unsigned char *s);
@@ -144,7 +146,7 @@ static signed_int signed_leb128_to_int(const unsigned char *s)
 	more = c & 0x80;
     } while (more);
 
-    if (c & 0x40 && shift < sizeof(unsigned_int) * CHAR_BIT)
+    if (c & 0x40 && shift < uint_bits)
 	val |= ~0UL << shift;
 
     return val;
