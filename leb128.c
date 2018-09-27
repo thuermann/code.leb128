@@ -1,5 +1,7 @@
 /*
- * $Id: leb128.c,v 1.6 2018/09/25 23:54:17 urs Exp $
+ * $Id: leb128.c,v 1.7 2018/09/27 08:34:44 urs Exp $
+ *
+ * LEB128 encoder and decoder with optional zigzag encoding
  */
 
 #include <stdlib.h>
