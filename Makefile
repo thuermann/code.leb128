@@ -1,11 +1,11 @@
 #
-# $Id: Makefile,v 1.2 2018/09/25 23:57:58 urs Exp $
+# $Id: Makefile,v 1.3 2018/09/27 20:47:40 urs Exp $
 #
 
 RM     = rm -f
 PROTOC = protoc
 
-programs = leb128 pb
+programs = leb128 pb tst-zigzag
 
 .PHONY: all
 all: $(programs)
@@ -20,6 +20,9 @@ pb: pb.o int.pb.o
 	$(CXX) $(LDFLAGS) -o $@ pb.o int.pb.o -lprotobuf $(LDLIBS)
 
 pb.o intpb.o: int.pb.h
+
+tst-zigzag: tst-zigzag.o
+	$(CC) $(LDFLAGS) -o $@ tst-zigzag.o $(LDLIBS)
 
 .PHONY: clean
 clean:
