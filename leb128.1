@@ -1,0 +1,51 @@
+.\"
+.\" $Id: leb128.1,v 1.1 2018/09/30 02:48:06 urs Exp $
+.\"
+.TH LEB128 1 "Sep 29, 2018" "" "User Commands"
+.SH NAME
+leb128 \- encode and decode integers to LEB128
+.SH SYNOPSIS
+.B leb128
+.RB [ \-u | \-z "] [" \-e ]
+.I integer
+.br
+.B leb128
+.RB [ \-u | \-z ] " -d"
+.I bytes ...
+.SH DESCRIPTION
+.B leb128
+encodes integers into LEB128 (little-endian base 128) bytes sequences
+and vice versa.  LEB128 is a variable-length encoding scheme that
+encodes small integeger numbers in few bytes (down to 1) while larger
+numbers need moe bytes (up to 10 bytes for 64-bit integers).  The
+integer to be encoded is split into 7-bit groups which are then put into
+a sequence of bytes in little-endian order.  The most significant bit
+(MSB) in each byte indicates if there are further bytes following or
+not, i.e. the MSB is 1 for all bytes except the last.  There is a signed
+and an unsigned LEB128 variant, and
+.B leb128
+works on signed integers by default.
+.PP
+Optionally, the so-called zigzag encoding scheme can be applied to
+signed integers, which maps signed integers to unsigned integers in
+such a way, that numbers with a small absolute value are mapped to
+small unsigned numbers.  Zigzag is applied to signed integers before
+encoding with unsigned LEB128 and after decoding unsigned LEB128.
+.SH OPTIONS
+.TP
+.B \-e
+Encode integers to LEB128 (default).
+.TP
+.B \-d
+Decode LEB128 to integers.
+.TP
+.B \-u
+Encode or decode unsigned integers.
+.TP
+.B \-z
+Encode or decode signed integers using zigzag encoding in addition to
+LEB128.
+.SH BUGS
+Not all invalid uses are detected and reported.
+.SH AUTHOR
+Urs Thuermann <urs@isnogud.escape.de>
