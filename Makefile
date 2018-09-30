@@ -1,11 +1,13 @@
 #
-# $Id: Makefile,v 1.3 2018/09/27 20:47:40 urs Exp $
+# $Id: Makefile,v 1.4 2018/09/30 02:50:27 urs Exp $
 #
 
-RM     = rm -f
-PROTOC = protoc
+INSTALL = /usr/bin/install
+RM      = rm -f
+PROTOC  = protoc
 
 programs = leb128 pb tst-zigzag
+prefix   = /usr/local
 
 .PHONY: all
 all: $(programs)
@@ -23,6 +25,11 @@ pb.o intpb.o: int.pb.h
 
 tst-zigzag: tst-zigzag.o
 	$(CC) $(LDFLAGS) -o $@ tst-zigzag.o $(LDLIBS)
+
+.PHONY: install
+install:
+	$(INSTALL) -m 755 leb128   $(prefix)/bin
+	$(INSTALL) -m 644 leb128.1 $(prefix)/man/man1
 
 .PHONY: clean
 clean:
